@@ -5,11 +5,11 @@ public class Pilha {
 	private int tamanho;
 	private No primeiroNo = null;
 	
-	public boolean estaVazia() {
+	public void estaVazia() {
 		if(primeiroNo == null) {
-			return true;
+			System.out.println("Lista Vazia");
 		}else{
-			return false;
+			System.out.println("Lista Nao Vazia");
 		}
 	}
 	
@@ -17,28 +17,7 @@ public class Pilha {
 		return tamanho;
 	}
 	
-	private void acrescentarTamanho() {
-		tamanho++;
-	}
-	
-	private void reduzirTamanho() {
-		tamanho--;
-	}
-	
-	public void mostrarPilha(){
-		if(primeiroNo == null) {
-			System.out.println("Vazia");
-		}else{	
-			No no = new No();
-			no = primeiroNo;
-			while(no != null) {
-				System.out.println(no.getValor());
-				no = no.getProximoNo();
-			}
-		}	
-	}
-	
-	public int empilhar(int valor) {
+	public void empilhar(int valor) {
 		No novoNo = new No();
 		novoNo.setValor(valor);
 		if(primeiroNo == null) {
@@ -48,30 +27,38 @@ public class Pilha {
 			novoNo.setProximoNo(primeiroNo);
 			primeiroNo = novoNo;
 		}
-		acrescentarTamanho();
-		return 1;
+		tamanho++;
 	}
 	
 	public int desempilhar() {
 		if(primeiroNo == null) {
-			reduzirTamanho();
-			return -1;
+			System.out.println("Pilha Vazia");
+			return -9999;
 		}else{
 			No noAuxiliar  = primeiroNo;
 			int dado = primeiroNo.getValor();
 			primeiroNo = primeiroNo.getProximoNo();
-			noAuxiliar.setProximoNo(null);
-			reduzirTamanho();
+			noAuxiliar = null;
+			tamanho--;
 			return dado;
 		}		
 	}
 	
-	public int mostrarValor(int posicao) {
-		No noAuxiliar = primeiroNo;
-		for(int i = 0; i < posicao ; i++) {
-			noAuxiliar = noAuxiliar.getProximoNo();
+	public String mostrarPilha() {
+		String retorno = "";
+		No aux = primeiroNo;
+		if(tamanho > 0) {
+			for(int i = tamanho; i > 0 ; i--) {
+				retorno += String.format("%d - ", i )
+						+ aux.getValor()
+						+ "\n";
+				aux = aux.getProximoNo();		
+			}
+			return retorno;
+		}else {
+			return "Lista vazia";
 		}
-		return noAuxiliar.getValor();
+		
 	}
 	
 }
